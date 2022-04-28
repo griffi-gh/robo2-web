@@ -1,5 +1,4 @@
 import 'dotenv/config';
-import * as fs from 'fs/promises';
 import express from 'express';
 import Api from './api.js';
 
@@ -33,6 +32,7 @@ app.use('/', express.static('static'));
 
 //Robo 2 API
 app.get('/web/robo/levels/desc', async (req, res) => {
+  let data = ;
   procNull(res, await api.roboDesc());
 });
 

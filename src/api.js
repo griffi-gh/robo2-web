@@ -28,9 +28,11 @@ export default class Api {
   }
   
   async roboDesc() {
-    //TODO get level list from res
     const {rows} = await this.db.query(`
-      select name, array_length(levels, 1) as level_count from levelsets limit 128;
+      select
+        name,
+        array_length(levels, 1) as level_count
+      from levelsets limit 255;
     `);
     const out = new DataOutput();
     if(rows.length) {
@@ -42,7 +44,7 @@ export default class Api {
     } else {
       out.writeShort(1);
       out.writeUTF(NO_SETS);
-      out.writeShort(1);
+      out.writeShort(0);
     }
     return out.toBuffer();
   }
