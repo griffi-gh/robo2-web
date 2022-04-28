@@ -28,17 +28,18 @@ app.use((req, res, next) => {
 
 app.get('/', (req, res) => {
   res.send(`
-    <button type="button" href="web/robo/editor.html">
-      Level editor
-    </button>
-    <br> <hr> <br>
-    Use this Robo 2 API endpoint: 
-    <br>
+    <a href="web/robo/editor.html">
+      <button type="button">
+        Level editor
+      </button>
+    </a>
+    <br><hr><br>
+    Use this Robo 2 API endpoint:<br>
     <a href="/web/robo">
-      <span id="l">/</span>web/robo 
+      <span id="url">/</span>web/robo 
     </a>
     <script type="module">
-      document.getElementById("l").textContent = window.location.href
+      document.getElementById("url").textContent = window.location.href
     </script>
   `);
 });
