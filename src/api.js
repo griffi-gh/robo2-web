@@ -29,7 +29,7 @@ export default class Api {
   
   async roboDesc() {
     //TODO get level list from res
-    const {rows} = await db.query(`
+    const {rows} = await this.db.query(`
       select name, array_length(levels, 1) as level_count from levelsets limit 128;
     `);
     const out = new DataOutput();
