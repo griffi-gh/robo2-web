@@ -9,8 +9,6 @@ const api = await (new Api()).connect();
 
 console.log("\tStarting a web server...");
 
-const app = express();
-
 function procNull(res, data) {
   if(data == null) {
     res.status(400).send();
@@ -19,6 +17,10 @@ function procNull(res, data) {
   }
 }
 
+const app = express();
+
+app.use('/web/robo2/editor', express.static('editor'));
+
 app.use((req, res, next) => {
   console.log(req.path);
   next();
@@ -26,7 +28,12 @@ app.use((req, res, next) => {
 
 app.get('/', (req, res) => {
   res.send(`
+    <button type="button" href="web/robo/editor.html">
+      Level editor
+    </button>
+    <br> <hr> <br>
     Use this Robo 2 API endpoint: 
+    <br>
     <a href="/web/robo">
       <span id="l"></span>/web/robo 
     </a>
@@ -34,6 +41,10 @@ app.get('/', (req, res) => {
       document.getElementById("l").textContent = window.location.href
     </script>
   `);
+});
+
+app.get('/web/robo/editor.html', async (req, res) => {
+  res.redirect("../editor/");
 });
 
 app.get('/web/robo/levels/desc', async (req, res) => {
