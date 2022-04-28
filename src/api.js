@@ -6,7 +6,7 @@ import pg from 'pg';
 const NO_SETS = "No level sets available";
 
 export function verifyLevelName(name) {
-  return name && (name.length <= 32) && (name.toLowerCase() != "standart") && (name != NO_SETS);
+  return name && (name.length >= 1) && (name.length <= 32) && (name.toLowerCase() != "standart") && (name != NO_SETS);
 }
 
 export default class Api {
@@ -23,8 +23,28 @@ export default class Api {
     return this;
   }
   
-  async roboUpload(level) {
-    
+  async roboUpload(body) {
+    if(!(
+      body && 
+      (body instanceof Object) && 
+      body.name && 
+      body.levels 
+    )) {
+      return null;
+    }
+    if(!verifyLevelName(body.name)) {
+      return null;
+    }
+    let {name, levels} = body;
+    levels = levels.map(v => {
+      return Buffer.from(v, 'base64');
+    });
+    await this.db.query(`
+      insert into levelsets 
+        (name, levels) 
+        values ($1, $2);
+    `, [body.name, levels]);
+    return "ok";
   }
   
   async roboDesc() {
@@ -37,7 +57,7 @@ export default class Api {
     const out = new DataOutput();
     if(rows.length) {
       out.writeShort(rows.length);
-      row.forEach(row => {
+      rows.forEach(row => {
         out.writeUTF(row.name);
         out.writeShort(row.level_count); 
       });
