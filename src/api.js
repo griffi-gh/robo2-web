@@ -27,15 +27,14 @@ export default class Api {
   
   async roboDesc() {
     //TODO get level list from res
-    let res = await db.query(`
+    const {rows} = await db.query(`
       select name, array_length(levels, 1) from levelsets limit 128;
     `);
     const out = new DataOutput();
-    out.writeShort(strings.length);
-    strings.forEach(str => {
-      console.log("Writing lvl " + str);
-      out.writeUTF(str);
-      out.writeShort(1); //amount of levels in a levelpack (?)
+    out.writeShort(rows.length);
+    row.forEach(row => {
+      out.writeUTF(row.name);
+      out.writeShort(row.array_length); //amount of levels in a levelpack (?)
     });
     return out.toBuffer();
   }

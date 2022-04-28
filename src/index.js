@@ -33,13 +33,11 @@ app.use('/', express.static('static'));
 
 //Robo 2 API
 app.get('/web/robo/levels/desc', async (req, res) => {
-  let data = await api.roboDesc();
-  procNull(res, data);
+  procNull(res, await api.roboDesc());
 });
 
 app.get('/web/robo/levels/:id', async (req, res) => {
-  let data = res.send(req.params.id);
-  procNull(res, data);
+  procNull(res, await api.roboLevel(req.params.id));
 });
 
 //Start server
