@@ -45,7 +45,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/web/robo/editor.html', async (req, res) => {
-  res.redirect("../editor/");
+  res.redirect("../editor/index.html");
 });
 
 app.get('/web/robo/levels/desc', async (req, res) => {
