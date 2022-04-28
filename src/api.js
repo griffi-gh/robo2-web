@@ -1,7 +1,8 @@
 import {
   DataOutput
 } from './java.js';
-import * as pg from 'pg';
+import pg from 'pg';
+
 export function verifyLevelName(name) {
   return name && (name.length <= 32) && (name.toLowerCase() != "standart");
 }
@@ -27,6 +28,7 @@ export default class Api {
     `);
     console.log(res);
     return;
+    
     const out = new DataOutput();
     out.writeShort(strings.length);
     strings.forEach(str => {

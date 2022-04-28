@@ -1,11 +1,11 @@
+import 'dotenv/config';
 import * as fs from 'fs/promises';
 import express from 'express';
 import Api from './api.js';
-
 console.log("Starting...");
 
 console.log("\tConnecting to database...");
-const api = new Api().connect();
+const api = await (new Api()).connect();
 
 console.log("\tStarting a web server...");
 
