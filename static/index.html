@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("url").textContent = window.location.href
+    });
+  </script>
+  <style>
+    body {
+      background: black;
+      color: white;
+      font-family: Arial, Sans-Serif;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>
+   Welcome to robo2-web
+  </h1>
+  <a href="web/robo/editor/">
+    <button type="button">
+      Level editor
+    </button>
+  </a>
+  <br><hr><br>
+  Use this Robo 2 API endpoint:<br>
+  <a href="/web/robo">
+    <span id="url">/</span>web/robo 
+  </a>
+</body>
+</html>
