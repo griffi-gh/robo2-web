@@ -16,7 +16,7 @@ export default class Api {
     await this.db.query(`
       create table if not exists levelsets (
         id serial primary key,
-        name varchar(32),
+        name varchar(32) unique,
         levels bytea[]
       );
     `);
@@ -52,7 +52,9 @@ export default class Api {
       select
         name,
         array_length(levels, 1) as level_count
-      from levelsets limit 255;
+      from levelsets 
+      order by id desc 
+      limit 255;
     `);
     const out = new DataOutput();
     if(rows.length) {
@@ -70,18 +72,28 @@ export default class Api {
   }
   
   async roboLevel(name) {
+    //TODO add loop to support multiple levels
     if (!verifyLevelName(name)) {
       return null;
     }
-    //TODO get data from db
+    
+    const {rows} = await this.db.query(`
+      select levels 
+        from levelsets 
+        where name = $1;
+    `, [name]);
+    const {levels} = rows[0];
+    const data = Buffer.from(levels[0]);
+    
     const out = new DataOutput();
+    
     //level data
-    //TODO add loop to support multiple levels in levelpack
     out.writeShort(data.length);
     out.writeArr(data);
     //level names?
     out.writeShort(1);
     out.write(0);
+    
     return out.toBuffer();
   }
 }
