@@ -1,5 +1,6 @@
 const encoder = new TextEncoder();
 
+//TODO Add missing methods
 export class DataOutput {
   constructor() {
     this.data = [];

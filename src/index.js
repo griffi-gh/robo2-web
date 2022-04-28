@@ -20,7 +20,6 @@ app.get('/', (req, res) => {
 app.get('/web/robo/levels/desc', (req, res) => {
   console.log("Requested desc");
   const strings = [
-    "Standart",
     "Hello, world",
     "short name",
     "Тест UTF-8!",
