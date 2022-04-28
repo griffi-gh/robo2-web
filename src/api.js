@@ -3,8 +3,10 @@ import {
 } from './java.js';
 import pg from 'pg';
 
+const NO_SETS = "No level sets available";
+
 export function verifyLevelName(name) {
-  return name && (name.length <= 32) && (name.toLowerCase() != "standart");
+  return name && (name.length <= 32) && (name.toLowerCase() != "standart") && (name != NO_SETS);
 }
 
 export default class Api {
@@ -28,14 +30,20 @@ export default class Api {
   async roboDesc() {
     //TODO get level list from res
     const {rows} = await db.query(`
-      select name, array_length(levels, 1) from levelsets limit 128;
+      select name, array_length(levels, 1) as level_count from levelsets limit 128;
     `);
     const out = new DataOutput();
-    out.writeShort(rows.length);
-    row.forEach(row => {
-      out.writeUTF(row.name);
-      out.writeShort(row.array_length); //amount of levels in a levelpack (?)
-    });
+    if(rows.length) {
+      out.writeShort(rows.length);
+      row.forEach(row => {
+        out.writeUTF(row.name);
+        out.writeShort(row.level_count); 
+      });
+    } else {
+      out.writeShort(1);
+      out.writeUTF(NO_SETS);
+      out.writeShort(1);
+    }
     return out.toBuffer();
   }
   
