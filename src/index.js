@@ -19,7 +19,7 @@ function procNull(res, data) {
 
 const app = express();
 
-app.use('/web/robo2/editor', express.static('editor'));
+app.use('/web/robo/editor', express.static('editor'));
 
 app.use((req, res, next) => {
   console.log(req.path);
@@ -28,7 +28,7 @@ app.use((req, res, next) => {
 
 app.get('/', (req, res) => {
   res.send(`
-    <a href="web/robo/editor.html">
+    <a href="web/robo/editor/">
       <button type="button">
         Level editor
       </button>
@@ -42,10 +42,6 @@ app.get('/', (req, res) => {
       document.getElementById("url").textContent = window.location.href
     </script>
   `);
-});
-
-app.get('/web/robo/editor.html', async (req, res) => {
-  res.redirect("../editor/index.html");
 });
 
 app.get('/web/robo/levels/desc', async (req, res) => {
