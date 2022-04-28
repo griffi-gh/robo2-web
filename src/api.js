@@ -7,18 +7,26 @@ export function verifyLevelName(name) {
 }
 
 export default class Api {
-  constructor() {
-    this.db = new pg.Pool();
-    this.db.query(`
+  constructor() {}
+  async connect(opt) {
+    this.db = new pg.Pool(opt);
+    await this.db.query(`
       CREATE TABLE IF NOT EXISTS levelsets (
-        ID SERIAL PRIMARY KEY,
+        id SERIAL PRIMARY KEY,
         name VARCHAR(32),
         levels bytea[],
       );
     `);
+    return this;
   }
+  
   async roboDesc() {
     //TODO get level list from db
+    let res = await db.query(`
+      SELECT name, array_length(levels, 1) FROM levelsets;
+    `);
+    console.log(res);
+    return;
     const out = new DataOutput();
     out.writeShort(strings.length);
     strings.forEach(str => {
@@ -28,6 +36,7 @@ export default class Api {
     });
     return out.toBuffer();
   }
+  
   async roboLevel(name) {
     if (!verifyLevelName(name)) {
       return null;
