@@ -35,7 +35,7 @@ app.get('/', (req, res) => {
     Use this Robo 2 API endpoint: 
     <br>
     <a href="/web/robo">
-      <span id="l"></span>/web/robo 
+      <span id="l">/</span>web/robo 
     </a>
     <script type="module">
       document.getElementById("l").textContent = window.location.href
