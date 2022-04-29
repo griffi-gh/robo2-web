@@ -7,7 +7,11 @@
   <title>robo2-web</title>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      document.getElementById("url").textContent = window.location.href
+      Array.from(
+        document.getElementsByClassName("url")
+      ).forEach(v => {
+        v.textContent = window.location.href
+      });
     });
   </script>
   <style>
@@ -29,9 +33,13 @@
     </button>
   </a>
   <br><hr><br>
-  Use this Robo 2 API endpoint:<br>
+  Use this endpoint in the Robo 2 translation file:<br>
   <a href="/web/robo">
-    <span id="url">/</span>web/robo 
+    <span class="url">/</span>web/robo 
+  </a>
+  <br>
+  API: <a href="/api">
+    <span class="url">/</span>api 
   </a>
 </body>
 </html>
