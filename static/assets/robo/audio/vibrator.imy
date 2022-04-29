@@ -1,0 +1,9 @@
+BEGIN:IMELODY 
+VERSION:1.2 
+FORMAT:CLASS1.0 
+NAME:Test Vibrator
+BEAT:200 
+STYLE:S1 
+Melody:(vibeonr5vibeoff@10)
+END:IMELODY 
+
