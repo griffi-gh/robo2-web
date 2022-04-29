@@ -37,6 +37,7 @@ export default class Api {
     }
     let {name, levels} = body;
     levels = levels.map(v => {
+      console.log("base64 length: " + v.length);
       return Buffer.from(v, 'base64');
     });
     await this.db.query(`
@@ -72,28 +73,24 @@ export default class Api {
   }
   
   async roboLevel(name) {
-    //TODO add loop to support multiple levels
-    if (!verifyLevelName(name)) {
-      return null;
-    }
-    
+    if (!verifyLevelName(name)) return null;
     const {rows} = await this.db.query(`
       select levels 
         from levelsets 
         where name = $1;
     `, [name]);
+    if(!rows.length) return null; //TODO 404
     const {levels} = rows[0];
-    const data = Buffer.from(levels[0]);
     
     const out = new DataOutput();
-    
-    //level data
-    out.writeShort(data.length);
-    out.writeArr(data);
+    //level data 
+    levels.forEach(level => {
+      out.writeShort(level.length);
+      out.writeArr(level);
+    });
     //level names?
     out.writeShort(1);
     out.write(0);
-    
     return out.toBuffer();
   }
 }

@@ -11,48 +11,9 @@
       background: black;
     }
   </style>
-  <script type="module">
-    const base64 = a => btoa(new Uint8Array(a).reduce((d, b) => d + String.fromCharCode(b), ''));
-    const $id = id => document.getElementById(id);
-    
-    const filePicker = $id('file');
-    const addButton  = $id('add');
-    const submButton = $id('submit');
-    const lvlCounter = $id('lv-count');
-    const setName    = $id('name');
-    
-    const levels = [];
-    
-    addButton.addEventListener('click', () =>  {
-      const file = filePicker.files[0];
-      if(!file) return;
-      const reader = new FileReader();
-      reader.addEventListener('load', event => {
-        levels.push(event.result);
-        lvlCounter.value = (lvlCounter.value >>> 0) + 1;
-      });
-      reader.readAsArrayBuffer(file);
-    });
-    submButton.addEventListener('click', event => {
-      event.target.disabled = true;
-      const body = {
-        name: setName.value, 
-        levels: levels.map(v => base64(v))
-      };
-      fetch('/web/robo/upload', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
-      }).then(() => {
-        event.target.disabled = false;
-      });
-    });
-    
-    console.log("ready.");
-  </script>
+  <!--<script src="//cdn.jsdelivr.net/npm/eruda"></script>
+  <script>eruda.init();</script>-->
+  <script src="index.js" type="module"></script>
 </head>
 <body>
   <noscript>
