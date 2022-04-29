@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
+import serveIndex from 'serve-index';
 import Api from './api.js';
 
 console.log("Starting robo2-web...");
@@ -26,7 +27,8 @@ app.use((req, res, next) => {
   next();
 });
 
-//Static
+//static
+app.use('/assets/robo', serveIndex('static/assets/robo', {icons: true}));
 app.use(express.static('static'));
 
 //Parse JSON
