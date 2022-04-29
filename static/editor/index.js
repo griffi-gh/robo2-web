@@ -27,7 +27,7 @@ submButton.addEventListener('click', event => {
     name: setName.value, 
     levels: levels.map(v => base64(v))
   };
-  fetch('/web/robo/upload', {
+  fetch('/api/upload', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',

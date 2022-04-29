@@ -27,8 +27,7 @@ app.use((req, res, next) => {
 });
 
 //Static
-app.use('/web/robo/editor', express.static('editor'));
-app.use('/', express.static('static'));
+app.use(express.static('static'));
 
 //Parse JSON
 app.use(express.json());
@@ -43,7 +42,7 @@ app.get('/web/robo/levels/:id', async (req, res) => {
 });
 
 //Client side api
-app.post('/web/robo/upload', async (req, res) => {
+app.post('/api/upload', async (req, res) => {
   procNull(res, await api.roboUpload(req.body));
 });
 
