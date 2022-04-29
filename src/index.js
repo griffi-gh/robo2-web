@@ -8,7 +8,7 @@ console.log("- Connecting to database...");
 
 const api = await (new Api()).connect({
   connectionString: process.env.DATABASE_URL || undefined,
-  ssl: {rejectUnauthorized: false}
+  ssl: (!process.env.NOSSL) && {rejectUnauthorized: false}
 });
 
 console.log("- Starting the server...");
